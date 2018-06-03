@@ -1,0 +1,61 @@
+Original
+Course
+	- CID
+	- Term
+	- Subject
+	- CRSE
+	- Section
+	- Units
+Meetings
+	- Instructor(s)
+	- Meeting type
+	- Days
+	- Time
+	- Building
+	- Room
+Student
+	- Course Seat
+	- SID
+	- Surname
+	- Prefname
+	- Level
+	- Units
+	- Class
+	- Major
+	- LetterGrade
+	- Status
+	- Email
+
+Relation
+Course
+	- CID
+	- Term
+	- Subject
+	- Section
+	- CSRSE
+Meeting
+	- CID
+	- Term
+	- Meeting Type
+	- Days
+	- Instructor
+	- Time
+	- Building
+	- Room
+Enrollment
+	- SID
+	- CID
+	- Term
+	- LetterGrade
+	- NumberGrade
+	- Major
+	- Units
+	- Class
+	- Course Seat
+	- Status
+	- Level
+Student
+	- SID
+	- Surname
+	- Prefname
+	- Email
