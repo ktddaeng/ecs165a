@@ -2,9 +2,10 @@
 # coding: utf-8
 
 # In[51]:
-
+import sys
 import csv
 import os
+import glob
 import tarfile
 import io
 import psycopg2
@@ -216,15 +217,19 @@ cur.execute(sql)
 
 courses = {}
 
-direc = "./Grades"
-files = os.listdir(direc) # change this to be working directory
+direc = sys.argv[1]
+extension = 'csv'
+os.chdir(direc)
+
+files = [i for i in glob.glob('*.{}'.format(extension))]
+#files = os.listdir(direc) # change this to be working directory
 
 i = 0
 courses = {}
 for f in files[25:]:
     print(f)
 
-    with open(direc + "/" + f, 'r') as csv_file:
+    with open(f, 'r') as csv_file:
         big_list = []
         #csv_file = io.StringIO(f.read().decode('ascii'))
         reader = csv.reader(csv_file)
