@@ -1,1 +1,27 @@
 % Problem 1c goes below
+
+The table $Student$ has the following functional dependencies:
+
+$SID \rightarrow Surname, PrefName, Email$
+$Email \rightarrow Surname, PrefName, SID$
+
+These should hold because both $SID$ and $Email$ is unique to each student.
+
+The table $Grade$ has the following functional dependency, which should hold because each letter grade has a specific grade point:
+
+$Grade \rightarrow NumberGrade$
+
+The table $Course$ has the following functional dependencies:
+
+$CID, Term \rightarrow Subject, CSRE, Section$
+
+$Subject, CSRE \rightarrow Units$
+
+The table $Meetings$ has the following functional dependencies:
+
+$CID, Term, Meeting Type \leftarrow Instructor, Days, Time, Building, Room$
+
+The table $Enrollment$ has the following functional dependencies and MVDs:
+
+$SID, CID, Term \rightarrow Grade, Major, Units, Class, Seat, Status, Level$
+$SID \rightarrow Major$
