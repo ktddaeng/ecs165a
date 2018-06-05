@@ -75,11 +75,37 @@ def probc(cur):
         x = cur.fetchone()
         for i in x:
             print(i)
-        cur.execute(test2)
-        x = cur.fetchmany(20)
-        for i in x:
-            print(i)
-    
+            
+            
+def probe(cur):
+    q = """
+    SELECT DISTINCT(Meet1.Subject, Meet1.CRSE), 
+        Meet2.Subject, Meet2.CRSE
+    FROM (Meeting NATURAL JOIN Course) Meet1, 
+        (Meeting NATURAL JOIN Course) Meet2
+    WHERE Meet1.Term::text NOT LIKE '%03'
+        AND Meet2.Term::text NOT LIKE '%03' 
+        AND Meet1.Time NOT LIKE '%NA%' AND Meet2.Time NOT LIKE '%NA%'
+        AND Meet1.Days NOT LIKE '%NA%' AND Meet2.Days NOT LIKE '%NA%'
+        AND Meet1.Building NOT LIKE '%NA%' AND Meet2.Building NOT LIKE '%NA%'
+        AND Meet1.Room NOT LIKE '%NA%' AND Meet2.Room NOT LIKE '%NA%'
+        AND Meet1.CRSE < Meet2.CRSE
+        AND Meet1.Time = Meet2.Time
+        AND Meet1.Term = Meet2.Term
+        AND Meet1.Days = Meet2.Days
+        AND Meet1.Room = Meet2.Room 
+        AND Meet1.Building = Meet2.Building
+        AND Meet1.Instructor = Meet2.Instructor
+    ORDER BY (Meet1.Subject, Meet1.CRSE)
+    ;
+    """
+                                              
+    cur.execute(q)
+    x = cur.fetchall()
+    for i in x:
+        print(i)
+
+            
 conn = psycopg2.connect("dbname=FakeUData")
 cur = conn.cursor()
 
@@ -87,6 +113,7 @@ cur = conn.cursor()
 #proba(cur)
 #probb(cur)
 #probc(cur)
+probe(cur)
 
 cur.close()
 conn.close()
