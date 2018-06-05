@@ -103,27 +103,80 @@ def parse_meeting(big_list):
     try:
         meeting_list = []
         for idx, li in enumerate(big_list):
+        
+            duplicate = False
             if idx == 0: # skip over header
                 continue
             d = OrderedDict()
             if idx == 1:
                 first_instructor = li[0].replace("'", "''")
-            if li[0] == '' and idx > 0:
+                
+            if len(big_list) > 1 and idx > 1 and li[0] == '' and li[2] == '' and li[3] == '' and li[4] == '' and li[5] == '':
+                continue
+                
+            if li[0] == '' and idx > 1:
                 d["INSTR"] = first_instructor
+                li[0] = first_instructor
             else:
                 d["INSTR"] = li[0].replace("'", "''")
+                
+            if idx > 1 and li[1] == '' and li[2] == '' and li[3] == '' and li[4] == '' and li[5] == '' and li[0] != '':
+                temp_instructor = li[0].replace("'", "''")
+                w = dict(meeting_list[-1])
+                w["INSTR"] = temp_instructor
+                meeting_list.append(w)
+                
+                if li[0] == "Bryant, Kimberly R.":
+                    print("NOTICE ME!!!!!!@@@@@@@@@@")
+                    print(big_list)
+                    print("\n")
+                    print(meeting_list)
+                
+                continue
+                
+            if li[3] == '':
+                d["TIME"] = "NA"
+            else:
+                d["TIME"] = li[3]
+                
+            if li[4] == '':
+                d["BUILD"] = "NA"
+            else:
+                d["BUILD"] = li[4]
+                
+            if li[2] == '':
+                d["DAYS"] = "NA"
+            else:
+                d["DAYS"] = li[2]
+            
+            if li[5] == '':
+                d["ROOM"] = "NA"
+            else:
+                d["ROOM"] = li[5]
+                
+            for i in range(idx):
+                #print("Big list: " + str(big_list[i]) + "\t" + "li: " + str(li) + "\n")
+                if big_list[i] == li:
+                    #print(big_list)
+                    duplicate = True
+                    break
+                    
+            if duplicate == True:
+                continue
+                
             if len(li) != 6:
                 print("Length of meeting is not 6. Re-evaluate " + str(li))
-                
+
             li = ['NULL' if j == '' else j for j in li]
             
             d["TYPE"] = li[1]
-            d["DAYS"] = li[2]
-            d["TIME"] = li[3]
-            d["BUILD"] = li[4]
-            d["ROOM"] = li[5]
+            #d["DAYS"] = li[2]
+            #d["TIME"] = li[3]
+            #d["BUILD"] = li[4]
+            #d["ROOM"] = li[5]
             
             meeting_list.append(d)
+            
             
         return(meeting_list)
     
@@ -190,11 +243,12 @@ def extract_student_from_class(course):
 conn = psycopg2.connect("dbname=FakeUData")
 cur = conn.cursor()
 
+
 cur.execute('CREATE TABLE Course(CID integer, Term INTEGER, Subject CHAR(3), Section INTEGER, CRSE INTEGER, PRIMARY KEY(CID, Term));')
 
 cur.execute('CREATE TABLE Meeting(CID integer, Term INTEGER, Type CHAR(25), \
 Days CHAR(5), Instructor CHAR(30), Time CHAR(20), Building CHAR(4), \
-Room INTEGER);')
+Room CHAR(7), PRIMARY KEY(CID, Term, Instructor, Type, Time, Days, Building, Room));')
 #, PRIMARY KEY(CID, Term, Instructor, Type)
 
 cur.execute('CREATE TABLE Enrollment(SID integer, CID integer, Term INTEGER, Grade CHAR(4), Major CHAR(5), Units FLOAT, Class CHAR(5), Seat INTEGER, Status CHAR(5), Level CHAR(5), PRIMARY KEY(CID, Term, SID));')
@@ -226,7 +280,7 @@ files = [i for i in glob.glob('*.{}'.format(extension))]
 
 i = 0
 courses = {}
-for f in files[25:]:
+for f in files:
     print(f)
 
     with open(f, 'r') as csv_file:
@@ -290,7 +344,7 @@ for f in files[25:]:
     cur.execute(sql)
 
 
-#conn.commit()
+conn.commit()
 
 
 # In[ ]:
