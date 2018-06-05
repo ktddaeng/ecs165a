@@ -21,34 +21,65 @@ def proba(cur):
         
 def probb(cur):
     min_query = """
-    SELECT Instructor, MIN(avgGrade)
-    FROM 
-        (SELECT AVG(Number) avgGrade, Instructor
-        FROM Meeting NATURAL JOIN Enrollment NATURAL JOIN NumGrade
+    SELECT Instructor, avgGrade
+    FROM (SELECT Instructor, AVG(Number) avgGrade
+        FROM Meeting NATURAL JOIN (Enrollment INNER JOIN NumGrade on Enrollment.grade = NumGrade.letter)
         GROUP BY Instructor) GradeInstr
-    GROUP BY Instructor
+    WHERE avgGrade = (SELECT MIN(avgGrade) FROM 
+        (SELECT Instructor, AVG(Number) avgGrade
+        FROM Meeting NATURAL JOIN (Enrollment INNER JOIN NumGrade on Enrollment.grade = NumGrade.letter)
+        GROUP BY Instructor) g2)
     ;
-    """    
+    """
     
     cur.execute(min_query)
-    x = cur.fetchone()
-    print("Hardest professor: " + str(x))
+    x = cur.fetchall()
+    print("Hardest professor: ")
+    for entry in x:
+        print(entry)
     
     max_query = """
-    SELECT Instructor, MAX(avgGrade)
+    SELECT Instructor, avgGrade
     FROM 
         (SELECT AVG(Number) avgGrade, Instructor
-        FROM Meeting NATURAL JOIN Enrollment NATURAL JOIN NumGrade
+        FROM Meeting NATURAL JOIN (Enrollment INNER JOIN NumGrade on Enrollment.grade = NumGrade.letter)
         GROUP BY Instructor) GradeInstr
-    GROUP BY Instructor    
+    WHERE avgGrade = (SELECT MAX(avgGrade) FROM 
+        (SELECT Instructor, AVG(Number) avgGrade
+        FROM Meeting NATURAL JOIN (Enrollment INNER JOIN NumGrade on Enrollment.grade = NumGrade.letter)
+        GROUP BY Instructor) g2)
     ;
     """    
     
-    
     cur.execute(max_query)
-    y = cur.fetchone()
-    print("Easiest professor: " + str(y))
-	
+    y = cur.fetchall()
+    print("\nEasiest professor: ")
+    for entry in y:
+        print(entry)
+    
+def probc(cur):
+    for i in range(20):
+        q = """
+        SELECT sumUnits, (SUM(GPA * sumUnits) / SUM(sumUnits)) weighedGPA
+        FROM
+            (SELECT SID, TERM, SUM(UNITS) sumUnits, GPA
+            FROM ENROLLMENT NATURAL LEFT JOIN NUMGRADE
+            GROUP BY SID, TERM, GPA) StudentGPA
+        WHERE sumUnits > 0
+        GROUP BY sumUnits
+        HAVING sumUnits = %s
+        ;
+        """ %(str(i+1))
+                                              
+        cur.execute(q)
+        x = cur.fetchone()
+        for i in x:
+            print(i)
+        cur.execute(test2)
+        x = cur.fetchmany(20)
+        for i in x:
+            print(i)
+			
 def probd(cur):
 	print
 	print("Results for 3d")
