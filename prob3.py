@@ -367,7 +367,29 @@ def probf(cur):
 	y = cur.fetchall()
 	for row in y:
 		print(row)
-
+		
+def probg(cur):
+	print("\nResults for 3f")
+	query1= """
+		SELECT N.SID, N.Term, N.Major, M.Term, M.Major FROM 
+			(
+				(SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) N
+				CROSS JOIN
+				(SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) M
+			)
+		WHERE (N.SID = M.SID AND N.Term < M.Term AND (M.Term - N.Term) <= 4 AND N.Major != M.Major)
+	LIMIT 10
+	"""
+	q = """
+	SELECT SID, Major, Term FROM Enrollment GROUP BY (SID, Term, Major)
+	(N.RN < M.RN AND N.SID = M.SID AND N.Term = M.Term AND N.Major != M.Major)
+		OR 
+	"""
+	
+	cur.execute(query1)
+	y = cur.fetchall()
+	for row in y:
+		print(row)
 
 conn = psycopg2.connect("dbname=FakeUData")
 cur = conn.cursor()
@@ -378,6 +400,7 @@ cur = conn.cursor()
 #probd(cur)
 #probe(cur)
 #probf(cur)
+probg(cur)
 
 cur.close()
 conn.close()

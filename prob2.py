@@ -244,7 +244,7 @@ Days CHAR(5), Instructor CHAR(30), Time CHAR(20), Building CHAR(4), \
 Room CHAR(7), PRIMARY KEY(CID, Term, Instructor, Type, Time, Days, Building, Room));')
 #, PRIMARY KEY(CID, Term, Instructor, Type)
 
-cur.execute('CREATE TABLE Enrollment(SID integer, CID integer, Term INTEGER, Grade CHAR(4), Major CHAR(5), Units FLOAT, Class CHAR(5), Seat INTEGER, Status CHAR(5), Level CHAR(5), PRIMARY KEY(CID, Term, SID));')
+cur.execute('CREATE TABLE Enrollment(RN serial, SID integer, CID integer, Term INTEGER, Grade CHAR(4), Major CHAR(5), Units FLOAT, Class CHAR(5), Seat INTEGER, Status CHAR(5), Level CHAR(5), PRIMARY KEY(CID, Term, SID));')
 
 cur.execute('CREATE TABLE Student(SID integer, Surname CHAR(20), \
 Prefname CHAR(20), Email CHAR(40), PRIMARY KEY(SID));')
