@@ -125,13 +125,6 @@ def parse_meeting(big_list):
                 w = dict(meeting_list[-1])
                 w["INSTR"] = temp_instructor
                 meeting_list.append(w)
-                
-                if li[0] == "Bryant, Kimberly R.":
-                    print("NOTICE ME!!!!!!@@@@@@@@@@")
-                    print(big_list)
-                    print("\n")
-                    print(meeting_list)
-                
                 continue
                 
             if li[3] == '':
@@ -244,7 +237,7 @@ conn = psycopg2.connect("dbname=FakeUData")
 cur = conn.cursor()
 
 
-cur.execute('CREATE TABLE Course(CID integer, Term INTEGER, Subject CHAR(3), Section INTEGER, CRSE INTEGER, PRIMARY KEY(CID, Term));')
+cur.execute('CREATE TABLE Course(CID integer, Term INTEGER, Subject CHAR(3), Section INTEGER, CRSE INTEGER, UnitRange CHAR(18), PRIMARY KEY(CID, Term));')
 
 cur.execute('CREATE TABLE Meeting(CID integer, Term INTEGER, Type CHAR(25), \
 Days CHAR(5), Instructor CHAR(30), Time CHAR(20), Building CHAR(4), \
@@ -281,7 +274,7 @@ files = [i for i in glob.glob('*.{}'.format(extension))]
 i = 0
 courses = {}
 for f in files:
-    print(f)
+    #print(f)
 
     with open(f, 'r') as csv_file:
         big_list = []
@@ -320,9 +313,9 @@ for f in files:
             if row == ['']:
                 big_list = []
 
-    c_rows = [tuple(d.info.values())[:-1 or None] for d in list(courses.values()) if d.enrollment.empty == False]
+    c_rows = [tuple(d.info.values()) for d in list(courses.values()) if d.enrollment.empty == False]
     values = ", ".join(map(str, c_rows))
-    sql = "INSERT INTO Course(CID, Term, Subject, CRSE, Section) VALUES {};".format(values).replace("'NULL'","NULL")
+    sql = "INSERT INTO Course(CID, Term, Subject, CRSE, Section, UnitRange) VALUES {};".format(values).replace("'NULL'","NULL")
     cur.execute(sql)
 
     m_rows = [extract_meeting_from_class(course) for course in courses.values() if course.enrollment.empty == False]
