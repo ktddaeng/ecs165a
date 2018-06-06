@@ -1,22 +1,22 @@
 import psycopg2
 
 def proba(cur):
-    cur.execute("select count(distinct SID) from student;")
+    cur.execute("select count(SID) from student;")
     total_students = cur.fetchone()[0]
     for i in range(20):
         unit_compare = str(i+1)
-        print(unit_compare)
         cur.execute("""
-            SELECT unitSum, COUNT(SID) countSID FROM (
-                SELECT CEIL(SUM(units)) unitSum, SID, Term
+            SELECT unitSum, COUNT(distinct SID) countSID FROM (
+                SELECT (SUM(units)) unitSum, SID, Term
                 FROM enrollment NATURAL JOIN Course
                 WHERE Subject IN ('ABC','DEF')
                 GROUP BY (Term, SID)
+                HAVING SUM(units) = %s
             ) StudentUnitSum
             GROUP BY unitSum
-            HAVING unitSum = %s;""" %unit_compare)
+            ;""" %unit_compare)
         unit, count = cur.fetchone()
-        print(count * 100 / total_students)
+        print(unit_compare + ": " + str(round(count * 100 / total_students, 4)) + "%")
 
         
 def probb(cur):
@@ -58,6 +58,8 @@ def probb(cur):
         print(entry)
     
 def probc(cur):
+    print
+    print("Results for 3c")
     for i in range(20):
         q = """
         SELECT sumUnits, (SUM(GPA * sumUnits) / SUM(sumUnits)) weighedGPA
@@ -72,9 +74,8 @@ def probc(cur):
         """ %(str(i+1))
                                               
         cur.execute(q)
-        x = cur.fetchone()
-        for i in x:
-            print(i)
+        _, x = cur.fetchone()
+        print(str(i+1) + ": " + str(round(x, 2)))
 
             
 def probd(cur):
@@ -498,7 +499,7 @@ cur = conn.cursor()
 #probb(cur)
 #probc(cur)
 #probd(cur)
-#probe(cur)
+probe(cur)
 #probf(cur)
 #probg(cur)
 probh(cur)
