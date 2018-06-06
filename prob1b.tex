@@ -1,11 +1,23 @@
 % Problem 1b goes below
 
+$Student(SID, Surname, PrefName, Email)$
+\\\\
 For the first table $Student$, the primary key is $SID$, which can get you a student's name and email. Although $SID$ and $Email$ are both unique to each student, $SID$ was chosen as the key because it's used more in relation to the other attributes we're exploring, and in other tables, each student will be referred to by their $SID$.
-
+\\\\
+$Course(CID, Term, CRSE, UNITS)$
+\\\\
 The table $Course$ is course information of each course enrollment. The primary key is course ID ($CID$) and $Term$ number. From that, we can get the full course name including $Subject$, $CSRE$, $UNITS$ offered, and $Section$ number. We noticed that each section has a unique $CID$ in a $Term$ even if the class is the same, but $CID$ can be reused in different terms.
-
-Each $Course$ has at least one $Meeting$. Depending on $Meeting Type$, we can find the $Days$, $Time$, $Building$, $Room$, and $Instructor$ for that meeting.
-
+\\\\
+$Meeting(SID, Term, Type, Days, Time, Building, Room, Instructor)$
+\\\\
+A $Course$ can have multiple meetings, each with potentially different instructors, days, times, rooms, buildings. There are multiple types of meetings, and a course can have more than one kind of meeting.
+\\\\
+$Enrollment(RN, SID, CID, Term, Grade, Course Seat, Units, Status, Class, Level, Major)$
+\\\\
 Each entry in $Enrollment$ is an indication of a student's status in the term they were enrolled in a certain course. If we know the student's $SID$ and the $CID$ and $Term$ for the course they're taking and when, we can find what $Grade$ they got, how many $Units$ they took for that class, the $Course Seat$ they were in for that class, their registration $Status$, $Class$ standing, and their $Level$. Since students can change major, each enrollment keeps track of what $Major$ the student currently had declared at the time.
 
-$Grade$ is determined on a numeric scale and has an assigned $Number Grade$ according to their letter grade.
+In the case of the corruption of summer courses, we have added another attribute $RN$ to $Enrollment$ that keeps track of the order a record is entered into $Enrollment$. Should we run into cases where a duplicate entry occurs because of the corruption, we can use the $RN$ to figure out which came first.
+\\\\
+$NumGrade(Letter, Number, GPA)$
+\\\\
+$Grade$ is determined on a numeric scale and has an assigned $Number$ according to their $Letter$. A $GPA$ is attached to each letter grade.

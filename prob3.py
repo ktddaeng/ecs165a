@@ -1,6 +1,7 @@
 import psycopg2
 
 def proba(cur):
+    print("\nResults for 3a")
     cur.execute("select count(SID) from student;")
     total_students = cur.fetchone()[0]
     for i in range(20):
@@ -20,6 +21,7 @@ def proba(cur):
 
         
 def probb(cur):
+    print("\nResults for 3b")
     min_query = """
     SELECT Instructor, avgGrade
     FROM (SELECT Instructor, AVG(Number) avgGrade
@@ -87,7 +89,7 @@ def probd(cur):
             (
             SELECT COUNT(SID) totalS, Subject, CRSE
             FROM Enrollment NATURAL JOIN Course
-            WHERE Grade IN ('A+', 'A', 'A-', 'B+', 'B', 'B+', 'C-', 'C', 'C+', 'D', 'D+', 'D-', 'P', 'S', 		'F', 'U', 'NS', 'NP')
+            WHERE Grade IN ('A+', 'A', 'A-', 'B+', 'B', 'B+', 'C-', 'C', 'C+', 'D', 'D+', 'D-', 'P', 'S',       'F', 'U', 'NS', 'NP')
             GROUP BY (Subject, CRSE)
             ) Total
         NATURAL JOIN
@@ -106,7 +108,7 @@ def probd(cur):
             (
             SELECT COUNT(SID) totalS, Subject, CRSE
             FROM Enrollment NATURAL JOIN Course
-            WHERE Grade IN ('A+', 'A', 'A-', 'B+', 'B', 'B+', 'C-', 'C', 'C+', 'D', 'D+', 'D-', 'P', 'S', 		'F', 'U', 'NS', 'NP')
+            WHERE Grade IN ('A+', 'A', 'A-', 'B+', 'B', 'B+', 'C-', 'C', 'C+', 'D', 'D+', 'D-', 'P', 'S',       'F', 'U', 'NS', 'NP')
             GROUP BY (Subject, CRSE)
             ) Total
         NATURAL JOIN
@@ -127,7 +129,7 @@ def probd(cur):
             (
             SELECT COUNT(SID) totalS, Subject, CRSE
             FROM Enrollment NATURAL JOIN Course
-            WHERE Grade IN ('A+', 'A', 'A-', 'B+', 'B', 'B+', 'C-', 'C', 'C+', 'D', 'D+', 'D-', 'P', 'S', 		'F', 'U', 'NS', 'NP')
+            WHERE Grade IN ('A+', 'A', 'A-', 'B+', 'B', 'B+', 'C-', 'C', 'C+', 'D', 'D+', 'D-', 'P', 'S',       'F', 'U', 'NS', 'NP')
             GROUP BY (Subject, CRSE)
             ) Total
         NATURAL JOIN
@@ -146,7 +148,7 @@ def probd(cur):
             (
             SELECT COUNT(SID) totalS, Subject, CRSE
             FROM Enrollment NATURAL JOIN Course
-            WHERE Grade IN ('A+', 'A', 'A-', 'B+', 'B', 'B+', 'C-', 'C', 'C+', 'D', 'D+', 'D-', 'P', 'S', 		'F', 'U', 'NS', 'NP')
+            WHERE Grade IN ('A+', 'A', 'A-', 'B+', 'B', 'B+', 'C-', 'C', 'C+', 'D', 'D+', 'D-', 'P', 'S',       'F', 'U', 'NS', 'NP')
             GROUP BY (Subject, CRSE)
             ) Total
         NATURAL JOIN
@@ -160,10 +162,7 @@ def probd(cur):
     ) X
     )
     ;
-    """
-    print("Lowest Pass Rate:")
-
-    
+    """    
     cur.execute(query1)
     
     y = cur.fetchall()
@@ -176,9 +175,9 @@ def probd(cur):
     z = cur.fetchall()
     for row in z:
         (_, subject, num) = row
-        print(str(subject) + str(num), end=", ")
+        print(str(subject) + str(num) + ": " + str(round(rate, 2)) + "%") 
     print("\n")
-        #print(str(subject) + str(num) + ": " + str(round(rate, 2)) + "%")            
+        #print(str(subject) + str(num) + ": " + str(round(rate, 2)) + "%") 
 
         
 def probe(cur):
@@ -211,7 +210,6 @@ def probe(cur):
     for i in x:
         print(i)
 
-
 def probf(cur):	
     print
     print("Results for 3f")
@@ -231,7 +229,7 @@ def probf(cur):
         GROUP BY Major
         ORDER BY AvgGrade
     ) EnCrGrSelect
-    WHERE AvgGrade = (SELECT MAX(AvgGrade) FROM		
+    WHERE AvgGrade = (SELECT MAX(AvgGrade) FROM	
     (
         SELECT Major, AVG(GPA) AvgGrade FROM
         (
@@ -266,7 +264,7 @@ def probf(cur):
         GROUP BY Major
         ORDER BY AvgGrade
     ) EnCrGrSelect
-    WHERE AvgGrade = (SELECT MIN(AvgGrade) FROM		
+    WHERE AvgGrade = (SELECT MIN(AvgGrade) FROM
     (
         SELECT Major, AVG(GPA) AvgGrade FROM
         (
@@ -301,7 +299,7 @@ def probf(cur):
         GROUP BY Major
         ORDER BY AvgGrade
     ) EnCrGrSelect
-    WHERE AvgGrade = (SELECT MAX(AvgGrade) FROM		
+    WHERE AvgGrade = (SELECT MAX(AvgGrade) FROM
     (
         SELECT Major, AVG(GPA) AvgGrade FROM
         (
@@ -336,7 +334,7 @@ def probf(cur):
         GROUP BY Major
         ORDER BY AvgGrade
     ) EnCrGrSelect
-    WHERE AvgGrade = (SELECT MIN(AvgGrade) FROM		
+    WHERE AvgGrade = (SELECT MIN(AvgGrade) FROM	
     (
         SELECT Major, AVG(GPA) AvgGrade FROM
         (
@@ -355,7 +353,6 @@ def probf(cur):
     )
     ;
     """
-
     print("Best Majors in ABC Courses")
     cur.execute(query1)
     y = cur.fetchall()
@@ -376,7 +373,6 @@ def probf(cur):
     for row in y:
         major, grade = row
         print("Major: " + str(major) + "\tGrade: " + str(grade))
-        
     print("Worst Majors in DEF Courses")
     cur.execute(query4)
     y = cur.fetchall()
@@ -385,127 +381,131 @@ def probf(cur):
         print("Major: " + str(major) + "\tGrade: " + str(grade))
 		
 def probg(cur):
-	print("\nResults for 3g")	
-	query1= """ SELECT COUNT(OldMajor) AS CtMajor, OldMajor FROM
-	(
-		SELECT N.SID, N.Term, N.Major AS OldMajor, M.Term, M.Major AS NewMajor FROM 
-			(
-				(SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) N
-				CROSS JOIN
-				(SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) M
-			)
-		WHERE (N.RN < M.RN AND N.SID = M.SID AND N.Term = M.Term AND N.Major != M.Major)
-		OR (N.SID = M.SID AND N.Term < M.Term AND (M.Term - N.Term) <= 4 AND N.Major != M.Major)
-	) F
-	WHERE NewMajor LIKE ('ABC%') AND OldMajor NOT LIKE ('ABC%')
-	GROUP BY (OldMajor)
-	ORDER BY CtMajor DESC
-	LIMIT 5;
-	"""
-	query2= """ SELECT (CtMajor * 100.0 /
-		( SELECT COUNT(SID) FROM
-		(SELECT N.SID AS SID, N.Term, N.Major AS OldMajor, M.Term, M.Major AS NewMajor FROM 
-				(
-					(SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) N
-					CROSS JOIN
-					(SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) M
-				)
-			WHERE (N.RN < M.RN AND N.SID = M.SID AND N.Term = M.Term AND N.Major != M.Major)
-			OR (N.SID = M.SID AND N.Term < M.Term AND (M.Term - N.Term) <= 4 AND N.Major != M.Major)
-		)X
-		WHERE NewMajor LIKE ('ABC%') AND OldMajor NOT LIKE ('ABC%')
-		)		
-	) AS Percentage, OldMajor FROM
-	(SELECT COUNT(OldMajor) AS CtMajor, OldMajor FROM
-	(
-		SELECT N.SID, N.Term, N.Major AS OldMajor, M.Term, M.Major AS NewMajor FROM 
-			(
-				(SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) N
-				CROSS JOIN
-				(SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) M
-			)
-		WHERE (N.RN < M.RN AND N.SID = M.SID AND N.Term = M.Term AND N.Major != M.Major)
-		OR (N.SID = M.SID AND N.Term < M.Term AND (M.Term - N.Term) <= 4 AND N.Major != M.Major)
-	) F
-	WHERE NewMajor LIKE ('ABC%') AND OldMajor NOT LIKE ('ABC%')
-	GROUP BY (OldMajor)
-	ORDER BY CtMajor DESC
-	LIMIT 5
-	) FX
-	;
-	"""
-	
-	print("The top 5 majors to transfer into ABC")
-	cur.execute(query1)
-	y = cur.fetchall()
-	for row in y:
-		print(row)
-	print("The top 5 majors to transfer into ABC by percentage")
-	cur.execute(query2)
-	y = cur.fetchall()
-	for row in y:
-		print(row)
-		
+    print("\nResults for 3g")   
+    query1= """ SELECT COUNT(OldMajor) AS CtMajor, OldMajor FROM
+    (
+        SELECT N.SID, N.Term, N.Major AS OldMajor, M.Term, M.Major AS NewMajor FROM 
+            (
+                (SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) N
+                CROSS JOIN
+                (SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) M
+            )
+        WHERE (N.RN < M.RN AND N.SID = M.SID AND N.Term = M.Term AND N.Major != M.Major)
+        OR (N.SID = M.SID AND N.Term < M.Term AND (M.Term - N.Term) <= 4 AND N.Major != M.Major)
+    ) F
+    WHERE NewMajor LIKE ('ABC%') AND OldMajor NOT LIKE ('ABC%')
+    GROUP BY (OldMajor)
+    ORDER BY CtMajor DESC
+    LIMIT 5;
+    """
+    query2= """ SELECT OldMajor, (CtMajor * 100.0 /
+        ( SELECT COUNT(SID) FROM
+        (SELECT N.SID AS SID, N.Term, N.Major AS OldMajor, M.Term, M.Major AS NewMajor FROM 
+                (
+                    (SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) N
+                    CROSS JOIN
+                    (SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) M
+                )
+            WHERE (N.RN < M.RN AND N.SID = M.SID AND N.Term = M.Term AND N.Major != M.Major)
+            OR (N.SID = M.SID AND N.Term < M.Term AND (M.Term - N.Term) <= 4 AND N.Major != M.Major)
+        )X
+        WHERE NewMajor LIKE ('ABC%') AND OldMajor NOT LIKE ('ABC%')
+        )       
+    ) AS Percentage FROM
+    (SELECT COUNT(OldMajor) AS CtMajor, OldMajor FROM
+    (
+        SELECT N.SID, N.Term, N.Major AS OldMajor, M.Term, M.Major AS NewMajor FROM 
+            (
+                (SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) N
+                CROSS JOIN
+                (SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) M
+            )
+        WHERE (N.RN < M.RN AND N.SID = M.SID AND N.Term = M.Term AND N.Major != M.Major)
+        OR (N.SID = M.SID AND N.Term < M.Term AND (M.Term - N.Term) <= 4 AND N.Major != M.Major)
+    ) F
+    WHERE NewMajor LIKE ('ABC%') AND OldMajor NOT LIKE ('ABC%')
+    GROUP BY (OldMajor)
+    ORDER BY CtMajor DESC
+    LIMIT 5
+    ) FX
+    ;
+    """
+    
+    print("The top 5 majors to transfer into ABC")
+    cur.execute(query1)
+    y = cur.fetchall()
+    for row in y:
+        ctmajor, oldmajor = row
+        print("Major: " + str(oldmajor) + "\tNumber: " + str(ctmajor))
+    print("The top 5 majors to transfer into ABC by percentage")
+    cur.execute(query2)
+    y = cur.fetchall()
+    for row in y:
+        oldmajor, percentage = row
+        print("Major: " + str(oldmajor) + "\tPercentage: " + str(percentage)[:6] + "%")
+        
 def probh(cur):
-	print("\nResults for 3h")	
-	query1= """ SELECT COUNT(NewMajor) AS CtMajor, NewMajor FROM
-	(
-		SELECT N.SID, N.Term, N.Major AS OldMajor, M.Term, M.Major AS NewMajor FROM 
-			(
-				(SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) N
-				CROSS JOIN
-				(SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) M
-			)
-		WHERE (N.RN < M.RN AND N.SID = M.SID AND N.Term = M.Term AND N.Major != M.Major)
-		OR (N.SID = M.SID AND N.Term < M.Term AND (M.Term - N.Term) <= 4 AND N.Major != M.Major)
-	) F
-	WHERE OldMajor LIKE ('ABC%') AND NewMajor NOT LIKE ('ABC%')
-	GROUP BY (NewMajor)
-	ORDER BY CtMajor DESC
-	LIMIT 5;
-	"""
-	query2= """ SELECT (CtMajor * 100.0 /
-		( SELECT COUNT(SID) FROM
-		(SELECT N.SID AS SID, N.Term, N.Major AS OldMajor, M.Term, M.Major AS NewMajor FROM 
-				(
-					(SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) N
-					CROSS JOIN
-					(SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) M
-				)
-			WHERE (N.RN < M.RN AND N.SID = M.SID AND N.Term = M.Term AND N.Major != M.Major)
-			OR (N.SID = M.SID AND N.Term < M.Term AND (M.Term - N.Term) <= 4 AND N.Major != M.Major)
-		)X
-		WHERE OldMajor LIKE ('ABC%') AND NewMajor NOT LIKE ('ABC%')
-		)		
-	) AS Percentage, NewMajor FROM
-	(SELECT COUNT(NewMajor) AS CtMajor, NewMajor FROM
-	(
-		SELECT N.SID, N.Term, N.Major AS OldMajor, M.Term, M.Major AS NewMajor FROM 
-			(
-				(SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) N
-				CROSS JOIN
-				(SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) M
-			)
-		WHERE (N.RN < M.RN AND N.SID = M.SID AND N.Term = M.Term AND N.Major != M.Major)
-		OR (N.SID = M.SID AND N.Term < M.Term AND (M.Term - N.Term) <= 4 AND N.Major != M.Major)
-	) F
-	WHERE OldMajor LIKE ('ABC%') AND NewMajor NOT LIKE ('ABC%')
-	GROUP BY (NewMajor)
-	ORDER BY CtMajor DESC
-	LIMIT 5
-	) FX
-	;
-	"""
-	print("The top 5 majors to transfer out of ABC")
-	cur.execute(query1)
-	y = cur.fetchall()
-	for row in y:
-		print(row)
-	print("The top 5 majors to transfer out of ABC by percentage")
-	cur.execute(query2)
-	y = cur.fetchall()
-	for row in y:
-		print(row)
+    print("\nResults for 3h")   
+    query1= """ SELECT COUNT(NewMajor) AS CtMajor, NewMajor FROM
+    (
+        SELECT N.SID, N.Term, N.Major AS OldMajor, M.Term, M.Major AS NewMajor FROM 
+            (
+                (SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) N
+                CROSS JOIN
+                (SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) M
+            )
+        WHERE (N.RN < M.RN AND N.SID = M.SID AND N.Term = M.Term AND N.Major != M.Major)
+        OR (N.SID = M.SID AND N.Term < M.Term AND (M.Term - N.Term) <= 4 AND N.Major != M.Major)
+    ) F
+    WHERE OldMajor LIKE ('ABC%') AND NewMajor NOT LIKE ('ABC%')
+    GROUP BY (NewMajor)
+    ORDER BY CtMajor DESC
+    LIMIT 5;
+    """
+    query2= """ SELECT (CtMajor * 100.0 /
+        ( SELECT COUNT(SID) FROM
+        (SELECT N.SID AS SID, N.Term, N.Major AS OldMajor, M.Term, M.Major AS NewMajor FROM 
+                (
+                    (SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) N
+                    CROSS JOIN
+                    (SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) M
+                )
+            WHERE (N.RN < M.RN AND N.SID = M.SID AND N.Term = M.Term AND N.Major != M.Major)
+            OR (N.SID = M.SID AND N.Term < M.Term AND (M.Term - N.Term) <= 4 AND N.Major != M.Major)
+        )X
+        WHERE OldMajor LIKE ('ABC%') AND NewMajor NOT LIKE ('ABC%')
+        )       
+    ) AS Percentage, NewMajor FROM
+    (SELECT COUNT(NewMajor) AS CtMajor, NewMajor FROM
+    (
+        SELECT N.SID, N.Term, N.Major AS OldMajor, M.Term, M.Major AS NewMajor FROM 
+            (
+                (SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) N
+                CROSS JOIN
+                (SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) M
+            )
+        WHERE (N.RN < M.RN AND N.SID = M.SID AND N.Term = M.Term AND N.Major != M.Major)
+        OR (N.SID = M.SID AND N.Term < M.Term AND (M.Term - N.Term) <= 4 AND N.Major != M.Major)
+    ) F
+    WHERE OldMajor LIKE ('ABC%') AND NewMajor NOT LIKE ('ABC%')
+    GROUP BY (NewMajor)
+    ORDER BY CtMajor DESC
+    LIMIT 5
+    ) FX
+    ;
+    """
+    print("The top 5 majors to transfer out of ABC")
+    cur.execute(query1)
+    y = cur.fetchall()
+    for row in y:
+        ctmajor, newmajor = row
+        print("Major: " + str(newmajor) + "\tNumber: " + str(ctmajor))
+    print("The top 5 majors to transfer out of ABC by percentage")
+    cur.execute(query2)
+    y = cur.fetchall()
+    for row in y:
+        percentage, newmajor = row
+        print("Major: " + str(newmajor) + "\tPercentage: " + str(percentage)[:6] + "%")
 
 conn = psycopg2.connect("dbname=FakeUData")
 cur = conn.cursor()
@@ -516,8 +516,8 @@ probc(cur)
 probd(cur)
 probe(cur)
 probf(cur)
-#probg(cur)
-#probh(cur)
+probg(cur)
+probh(cur)
 
 cur.close()
 conn.close()

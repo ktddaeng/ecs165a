@@ -6,22 +6,31 @@ $SID \rightarrow Surname, PrefName, Email$
 $Email \rightarrow Surname, PrefName, SID$
 
 These should hold because both $SID$ and $Email$ is unique to each student.
+\\\\
+The table $NumGrade$ has the following functional dependency, which should hold because each letter grade has a specific grade point:
 
-The table $Grade$ has the following functional dependency, which should hold because each letter grade has a specific grade point:
-
-$Grade \rightarrow NumberGrade$
-
+$Letter \rightarrow Number, GPA$
+\\\\
 The table $Course$ has the following functional dependencies:
 
 $CID, Term \rightarrow Subject, CSRE, Section$
 
 $Subject, CSRE \rightarrow Units$
+\\\\
+The table $Meetings$ has the following MVDs:
 
-The table $Meetings$ has the following functional dependencies:
+$SID, Term \twoheadrightarrow Instructor$
 
-$CID, Term, Meeting Type \leftarrow Instructor, Days, Time, Building, Room$
+$SID, Term \twoheadrightarrow Type$
 
-The table $Enrollment$ has the following functional dependencies and MVDs:
+There aren't any functional dependencies that may hold, meaning each attribute is part of the key, because there are a lot of potential corner cases in the data where data can be missing and is forced to use replicated data surrounding entries.
+\\\\
+The table $Enrollment$ has the following functional dependencies:
 
-$SID, CID, Term \rightarrow Grade, Major, Units, Class, Seat, Status, Level$
-$SID \rightarrow Major$
+$SID, CID, Term \rightarrow Grade, Units, Class, Seat, Status, Level$
+
+$RN \rightarrow Term, CID, SID, Major$
+
+$SID, CID, Term \twoheadrightarrow Major$
+
+There is potential corruption of the database such that a student can end up with multiple majors in the same term. This is assuming that double majors are not implemented in this system. So, $RN$ will make up for this deficiency if needed.
