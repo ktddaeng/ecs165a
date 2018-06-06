@@ -79,98 +79,106 @@ def probc(cur):
 
             
 def probd(cur):
-	print
-	print("Results for 3d")
-	query1 ="""
-	SELECT PassRate, Subject, CRSE FROM (
-		SELECT ((PassS * 100.0)/ totalS) AS PassRate, Subject, CRSE FROM (
-			(
-			SELECT COUNT(SID) totalS, Subject, CRSE
-			FROM Enrollment NATURAL JOIN Course
-			WHERE Grade IN ('A+', 'A', 'A-', 'B+', 'B', 'B+', 'C-', 'C', 'C+', 'D', 'D+', 'D-', 'P', 'S', 		'F', 'U', 'NS', 'NP')
-			GROUP BY (Subject, CRSE)
-			) Total
-		NATURAL JOIN
-			(
-			SELECT COUNT(SID) PassS, Subject, CRSE
-			FROM Enrollment NATURAL JOIN Course
-			WHERE Grade IN ('A+', 'A', 'A-', 'B+', 'B', 'B+', 'C-', 'C', 'C+', 'D', 'D+', 'D-', 'P')
-			GROUP BY (Subject, CRSE)
-			) Pass
-		) Rate
-		ORDER BY PassRate DESC
-	) N
-	WHERE PassRate = (SELECT MIN(PassRate) FROM
-	(
-		SELECT ((PassS * 100.0)/ totalS) AS PassRate, Subject, CRSE FROM (
-			(
-			SELECT COUNT(SID) totalS, Subject, CRSE
-			FROM Enrollment NATURAL JOIN Course
-			WHERE Grade IN ('A+', 'A', 'A-', 'B+', 'B', 'B+', 'C-', 'C', 'C+', 'D', 'D+', 'D-', 'P', 'S', 		'F', 'U', 'NS', 'NP')
-			GROUP BY (Subject, CRSE)
-			) Total
-		NATURAL JOIN
-			(
-			SELECT COUNT(SID) PassS, Subject, CRSE
-			FROM Enrollment NATURAL JOIN Course
-			WHERE Grade IN ('A+', 'A', 'A-', 'B+', 'B', 'B+', 'C-', 'C', 'C+', 'D', 'D+', 'D-', 'P')
-			GROUP BY (Subject, CRSE)
-			) Pass
-		) Rate
-	) X
-	)
-	;
-	"""
-	query2 = """
-	SELECT PassRate, Subject, CRSE FROM (
-		SELECT ((PassS * 100.0)/ totalS) AS PassRate, Subject, CRSE FROM (
-			(
-			SELECT COUNT(SID) totalS, Subject, CRSE
-			FROM Enrollment NATURAL JOIN Course
-			WHERE Grade IN ('A+', 'A', 'A-', 'B+', 'B', 'B+', 'C-', 'C', 'C+', 'D', 'D+', 'D-', 'P', 'S', 		'F', 'U', 'NS', 'NP')
-			GROUP BY (Subject, CRSE)
-			) Total
-		NATURAL JOIN
-			(
-			SELECT COUNT(SID) PassS, Subject, CRSE
-			FROM Enrollment NATURAL JOIN Course
-			WHERE Grade IN ('A+', 'A', 'A-', 'B+', 'B', 'B+', 'C-', 'C', 'C+', 'D', 'D+', 'D-', 'P', 'S')
-			GROUP BY (Subject, CRSE)
-			) Pass
-		) Rate
-		ORDER BY PassRate DESC
-	) N
-	WHERE PassRate = (SELECT MAX(PassRate) FROM
-	(
-		SELECT ((PassS * 100.0)/ totalS) AS PassRate, Subject, CRSE FROM (
-			(
-			SELECT COUNT(SID) totalS, Subject, CRSE
-			FROM Enrollment NATURAL JOIN Course
-			WHERE Grade IN ('A+', 'A', 'A-', 'B+', 'B', 'B+', 'C-', 'C', 'C+', 'D', 'D+', 'D-', 'P', 'S', 		'F', 'U', 'NS', 'NP')
-			GROUP BY (Subject, CRSE)
-			) Total
-		NATURAL JOIN
-			(
-			SELECT COUNT(SID) PassS, Subject, CRSE
-			FROM Enrollment NATURAL JOIN Course
-			WHERE Grade IN ('A+', 'A', 'A-', 'B+', 'B', 'B+', 'C-', 'C', 'C+', 'D', 'D+', 'D-', 'P', 'S')
-			GROUP BY (Subject, CRSE)
-			) Pass
-		) Rate
-	) X
-	)
-	;
-	"""
-	print("Lowest Pass Rate:")
-	cur.execute(query1)
-	y = cur.fetchall()
-	for row in y:
-		print(row)
-	print("Highest Pass Rate: ")
-	cur.execute(query2)
-	z = cur.fetchall()
-	for row in z:
-		print(row)            
+    print
+    print("Results for 3d")
+    query1 ="""
+    SELECT PassRate, Subject, CRSE FROM (
+        SELECT ((PassS * 100.0)/ totalS) AS PassRate, Subject, CRSE FROM (
+            (
+            SELECT COUNT(SID) totalS, Subject, CRSE
+            FROM Enrollment NATURAL JOIN Course
+            WHERE Grade IN ('A+', 'A', 'A-', 'B+', 'B', 'B+', 'C-', 'C', 'C+', 'D', 'D+', 'D-', 'P', 'S', 		'F', 'U', 'NS', 'NP')
+            GROUP BY (Subject, CRSE)
+            ) Total
+        NATURAL JOIN
+            (
+            SELECT COUNT(SID) PassS, Subject, CRSE
+            FROM Enrollment NATURAL JOIN Course
+            WHERE Grade IN ('A+', 'A', 'A-', 'B+', 'B', 'B+', 'C-', 'C', 'C+', 'D', 'D+', 'D-', 'P')
+            GROUP BY (Subject, CRSE)
+            ) Pass
+        ) Rate
+        ORDER BY PassRate DESC
+    ) N
+    WHERE PassRate = (SELECT MIN(PassRate) FROM
+    (
+        SELECT ((PassS * 100.0)/ totalS) AS PassRate, Subject, CRSE FROM (
+            (
+            SELECT COUNT(SID) totalS, Subject, CRSE
+            FROM Enrollment NATURAL JOIN Course
+            WHERE Grade IN ('A+', 'A', 'A-', 'B+', 'B', 'B+', 'C-', 'C', 'C+', 'D', 'D+', 'D-', 'P', 'S', 		'F', 'U', 'NS', 'NP')
+            GROUP BY (Subject, CRSE)
+            ) Total
+        NATURAL JOIN
+            (
+            SELECT COUNT(SID) PassS, Subject, CRSE
+            FROM Enrollment NATURAL JOIN Course
+            WHERE Grade IN ('A+', 'A', 'A-', 'B+', 'B', 'B+', 'C-', 'C', 'C+', 'D', 'D+', 'D-', 'P')
+            GROUP BY (Subject, CRSE)
+            ) Pass
+        ) Rate
+    ) X
+    )
+    ;
+    """
+    query2 = """
+    SELECT PassRate, Subject, CRSE FROM (
+        SELECT ((PassS * 100.0)/ totalS) AS PassRate, Subject, CRSE FROM (
+            (
+            SELECT COUNT(SID) totalS, Subject, CRSE
+            FROM Enrollment NATURAL JOIN Course
+            WHERE Grade IN ('A+', 'A', 'A-', 'B+', 'B', 'B+', 'C-', 'C', 'C+', 'D', 'D+', 'D-', 'P', 'S', 		'F', 'U', 'NS', 'NP')
+            GROUP BY (Subject, CRSE)
+            ) Total
+        NATURAL JOIN
+            (
+            SELECT COUNT(SID) PassS, Subject, CRSE
+            FROM Enrollment NATURAL JOIN Course
+            WHERE Grade IN ('A+', 'A', 'A-', 'B+', 'B', 'B+', 'C-', 'C', 'C+', 'D', 'D+', 'D-', 'P', 'S')
+            GROUP BY (Subject, CRSE)
+            ) Pass
+        ) Rate
+        ORDER BY PassRate DESC
+    ) N
+    WHERE PassRate = (SELECT MAX(PassRate) FROM
+    (
+        SELECT ((PassS * 100.0)/ totalS) AS PassRate, Subject, CRSE FROM (
+            (
+            SELECT COUNT(SID) totalS, Subject, CRSE
+            FROM Enrollment NATURAL JOIN Course
+            WHERE Grade IN ('A+', 'A', 'A-', 'B+', 'B', 'B+', 'C-', 'C', 'C+', 'D', 'D+', 'D-', 'P', 'S', 		'F', 'U', 'NS', 'NP')
+            GROUP BY (Subject, CRSE)
+            ) Total
+        NATURAL JOIN
+            (
+            SELECT COUNT(SID) PassS, Subject, CRSE
+            FROM Enrollment NATURAL JOIN Course
+            WHERE Grade IN ('A+', 'A', 'A-', 'B+', 'B', 'B+', 'C-', 'C', 'C+', 'D', 'D+', 'D-', 'P', 'S')
+            GROUP BY (Subject, CRSE)
+            ) Pass
+        ) Rate
+    ) X
+    )
+    ;
+    """
+    print("Lowest Pass Rate:")
+
+    
+    cur.execute(query1)
+    
+    y = cur.fetchall()
+    
+    for row in y:
+        (rate, subject, num) = row
+        print(str(subject) + str(num) + ": " + str(round(rate, 2)) + "%")
+    print("\nHighest Pass Rate: ")
+    cur.execute(query2)
+    z = cur.fetchall()
+    for row in z:
+        (_, subject, num) = row
+        print(str(subject) + str(num), end=", ")
+    print("\n")
+        #print(str(subject) + str(num) + ": " + str(round(rate, 2)) + "%")            
 
         
 def probe(cur):
@@ -205,169 +213,176 @@ def probe(cur):
 
 
 def probf(cur):	
-	print
-	print("Results for 3f")
-	query1 = """SELECT Major, AvgGrade FROM
-	(
-		SELECT Major, AVG(GPA) AvgGrade FROM
-		(
-			SELECT Major, Subject, CRSE, Grade, GPA
-			FROM NumGrade NATURAL JOIN
-			(
-				SELECT Major, Subject, CRSE, Grade
-				FROM Enrollment NATURAL JOIN Course
-				WHERE Subject = 'ABC'
-			) EnCr
-			WHERE Letter = Grade
-		) EnCrGr
-		GROUP BY Major
-		ORDER BY AvgGrade
-	) EnCrGrSelect
-	WHERE AvgGrade = (SELECT MAX(AvgGrade) FROM		
-	(
-		SELECT Major, AVG(GPA) AvgGrade FROM
-		(
-			SELECT Major, Subject, CRSE, Grade, GPA
-			FROM NumGrade NATURAL JOIN
-			(
-				SELECT Major, Subject, CRSE, Grade
-				FROM Enrollment NATURAL JOIN Course
-				WHERE Subject = 'ABC'
-			) EnCr
-			WHERE Letter = Grade
-		) EnCrGr
-		GROUP BY Major
-		ORDER BY AvgGrade
-	) EnCrGrSelect
-	)
-	;
-	"""
-	query2 = """SELECT Major, AvgGrade FROM
-	(
-		SELECT Major, AVG(GPA) AvgGrade FROM
-		(
-			SELECT Major, Subject, CRSE, Grade, GPA
-			FROM NumGrade NATURAL JOIN
-			(
-				SELECT Major, Subject, CRSE, Grade
-				FROM Enrollment NATURAL JOIN Course
-				WHERE Subject = 'ABC'
-			) EnCr
-			WHERE Letter = Grade
-		) EnCrGr
-		GROUP BY Major
-		ORDER BY AvgGrade
-	) EnCrGrSelect
-	WHERE AvgGrade = (SELECT MIN(AvgGrade) FROM		
-	(
-		SELECT Major, AVG(GPA) AvgGrade FROM
-		(
-			SELECT Major, Subject, CRSE, Grade, GPA
-			FROM NumGrade NATURAL JOIN
-			(
-				SELECT Major, Subject, CRSE, Grade
-				FROM Enrollment NATURAL JOIN Course
-				WHERE Subject = 'ABC'
-			) EnCr
-			WHERE Letter = Grade
-		) EnCrGr
-		GROUP BY Major
-		ORDER BY AvgGrade
-	) EnCrGrSelect
-	)
-	;
-	"""
-	query3 = """SELECT Major, AvgGrade FROM
-	(
-		SELECT Major, AVG(GPA) AvgGrade FROM
-		(
-			SELECT Major, Subject, CRSE, Grade, GPA
-			FROM NumGrade NATURAL JOIN
-			(
-				SELECT Major, Subject, CRSE, Grade
-				FROM Enrollment NATURAL JOIN Course
-				WHERE Subject = 'DEF'
-			) EnCr
-			WHERE Letter = Grade
-		) EnCrGr
-		GROUP BY Major
-		ORDER BY AvgGrade
-	) EnCrGrSelect
-	WHERE AvgGrade = (SELECT MAX(AvgGrade) FROM		
-	(
-		SELECT Major, AVG(GPA) AvgGrade FROM
-		(
-			SELECT Major, Subject, CRSE, Grade, GPA
-			FROM NumGrade NATURAL JOIN
-			(
-				SELECT Major, Subject, CRSE, Grade
-				FROM Enrollment NATURAL JOIN Course
-				WHERE Subject = 'DEF'
-			) EnCr
-			WHERE Letter = Grade
-		) EnCrGr
-		GROUP BY Major
-		ORDER BY AvgGrade
-	) EnCrGrSelect
-	)
-	;
-	"""
-	query4 = """SELECT Major, AvgGrade FROM
-	(
-		SELECT Major, AVG(GPA) AvgGrade FROM
-		(
-			SELECT Major, Subject, CRSE, Grade, GPA
-			FROM NumGrade NATURAL JOIN
-			(
-				SELECT Major, Subject, CRSE, Grade
-				FROM Enrollment NATURAL JOIN Course
-				WHERE Subject = 'DEF'
-			) EnCr
-			WHERE Letter = Grade
-		) EnCrGr
-		GROUP BY Major
-		ORDER BY AvgGrade
-	) EnCrGrSelect
-	WHERE AvgGrade = (SELECT MIN(AvgGrade) FROM		
-	(
-		SELECT Major, AVG(GPA) AvgGrade FROM
-		(
-			SELECT Major, Subject, CRSE, Grade, GPA
-			FROM NumGrade NATURAL JOIN
-			(
-				SELECT Major, Subject, CRSE, Grade
-				FROM Enrollment NATURAL JOIN Course
-				WHERE Subject = 'DEF'
-			) EnCr
-			WHERE Letter = Grade
-		) EnCrGr
-		GROUP BY Major
-		ORDER BY AvgGrade
-	) EnCrGrSelect
-	)
-	;
-	"""
-	
-	print("Best Majors in ABC Courses")
-	cur.execute(query1)
-	y = cur.fetchall()
-	for row in y:
-		print(row)
-	print("Worst Majors in ABC Courses")
-	cur.execute(query2)
-	y = cur.fetchall()
-	for row in y:
-		print(row)
-	print("Best Majors in DEF Courses")
-	cur.execute(query3)
-	y = cur.fetchall()
-	for row in y:
-		print(row)
-	print("Worst Majors in DEF Courses")
-	cur.execute(query4)
-	y = cur.fetchall()
-	for row in y:
-		print(row)
+    print
+    print("Results for 3f")
+    query1 = """SELECT Major, AvgGrade FROM
+    (
+        SELECT Major, AVG(GPA) AvgGrade FROM
+        (
+            SELECT Major, Subject, CRSE, Grade, GPA
+            FROM NumGrade NATURAL JOIN
+            (
+                SELECT Major, Subject, CRSE, Grade
+                FROM Enrollment NATURAL JOIN Course
+                WHERE Subject = 'ABC'
+            ) EnCr
+            WHERE Letter = Grade
+        ) EnCrGr
+        GROUP BY Major
+        ORDER BY AvgGrade
+    ) EnCrGrSelect
+    WHERE AvgGrade = (SELECT MAX(AvgGrade) FROM		
+    (
+        SELECT Major, AVG(GPA) AvgGrade FROM
+        (
+            SELECT Major, Subject, CRSE, Grade, GPA
+            FROM NumGrade NATURAL JOIN
+            (
+                SELECT Major, Subject, CRSE, Grade
+                FROM Enrollment NATURAL JOIN Course
+                WHERE Subject = 'ABC'
+            ) EnCr
+            WHERE Letter = Grade
+        ) EnCrGr
+        GROUP BY Major
+        ORDER BY AvgGrade
+    ) EnCrGrSelect
+    )
+    ;
+    """
+    query2 = """SELECT Major, AvgGrade FROM
+    (
+        SELECT Major, AVG(GPA) AvgGrade FROM
+        (
+            SELECT Major, Subject, CRSE, Grade, GPA
+            FROM NumGrade NATURAL JOIN
+            (
+                SELECT Major, Subject, CRSE, Grade
+                FROM Enrollment NATURAL JOIN Course
+                WHERE Subject = 'ABC'
+            ) EnCr
+            WHERE Letter = Grade
+        ) EnCrGr
+        GROUP BY Major
+        ORDER BY AvgGrade
+    ) EnCrGrSelect
+    WHERE AvgGrade = (SELECT MIN(AvgGrade) FROM		
+    (
+        SELECT Major, AVG(GPA) AvgGrade FROM
+        (
+            SELECT Major, Subject, CRSE, Grade, GPA
+            FROM NumGrade NATURAL JOIN
+            (
+                SELECT Major, Subject, CRSE, Grade
+                FROM Enrollment NATURAL JOIN Course
+                WHERE Subject = 'ABC'
+            ) EnCr
+            WHERE Letter = Grade
+        ) EnCrGr
+        GROUP BY Major
+        ORDER BY AvgGrade
+    ) EnCrGrSelect
+    )
+    ;
+    """
+    query3 = """SELECT Major, AvgGrade FROM
+    (
+        SELECT Major, AVG(GPA) AvgGrade FROM
+        (
+            SELECT Major, Subject, CRSE, Grade, GPA
+            FROM NumGrade NATURAL JOIN
+            (
+                SELECT Major, Subject, CRSE, Grade
+                FROM Enrollment NATURAL JOIN Course
+                WHERE Subject = 'DEF'
+            ) EnCr
+            WHERE Letter = Grade
+        ) EnCrGr
+        GROUP BY Major
+        ORDER BY AvgGrade
+    ) EnCrGrSelect
+    WHERE AvgGrade = (SELECT MAX(AvgGrade) FROM		
+    (
+        SELECT Major, AVG(GPA) AvgGrade FROM
+        (
+            SELECT Major, Subject, CRSE, Grade, GPA
+            FROM NumGrade NATURAL JOIN
+            (
+                SELECT Major, Subject, CRSE, Grade
+                FROM Enrollment NATURAL JOIN Course
+                WHERE Subject = 'DEF'
+            ) EnCr
+            WHERE Letter = Grade
+        ) EnCrGr
+        GROUP BY Major
+        ORDER BY AvgGrade
+    ) EnCrGrSelect
+    )
+    ;
+    """
+    query4 = """SELECT Major, AvgGrade FROM
+    (
+        SELECT Major, AVG(GPA) AvgGrade FROM
+        (
+            SELECT Major, Subject, CRSE, Grade, GPA
+            FROM NumGrade NATURAL JOIN
+            (
+                SELECT Major, Subject, CRSE, Grade
+                FROM Enrollment NATURAL JOIN Course
+                WHERE Subject = 'DEF'
+            ) EnCr
+            WHERE Letter = Grade
+        ) EnCrGr
+        GROUP BY Major
+        ORDER BY AvgGrade
+    ) EnCrGrSelect
+    WHERE AvgGrade = (SELECT MIN(AvgGrade) FROM		
+    (
+        SELECT Major, AVG(GPA) AvgGrade FROM
+        (
+            SELECT Major, Subject, CRSE, Grade, GPA
+            FROM NumGrade NATURAL JOIN
+            (
+                SELECT Major, Subject, CRSE, Grade
+                FROM Enrollment NATURAL JOIN Course
+                WHERE Subject = 'DEF'
+            ) EnCr
+            WHERE Letter = Grade
+        ) EnCrGr
+        GROUP BY Major
+        ORDER BY AvgGrade
+    ) EnCrGrSelect
+    )
+    ;
+    """
+
+    print("Best Majors in ABC Courses")
+    cur.execute(query1)
+    y = cur.fetchall()
+    for row in y:
+        major, grade = row
+        print("Major: " + str(major) + "\tGrade: " + str(grade))
+        
+    print("Worst Majors in ABC Courses")
+    cur.execute(query2)
+    y = cur.fetchall()
+    for row in y:
+        major, grade = row
+        print("Major: " + str(major) + "\tGrade: " + str(grade))
+        
+    print("Best Majors in DEF Courses")
+    cur.execute(query3)
+    y = cur.fetchall()
+    for row in y:
+        major, grade = row
+        print("Major: " + str(major) + "\tGrade: " + str(grade))
+        
+    print("Worst Majors in DEF Courses")
+    cur.execute(query4)
+    y = cur.fetchall()
+    for row in y:
+        major, grade = row
+        print("Major: " + str(major) + "\tGrade: " + str(grade))
 		
 def probg(cur):
 	print("\nResults for 3f")
@@ -398,10 +413,10 @@ cur = conn.cursor()
 #proba(cur)
 #probb(cur)
 #probc(cur)
-#probd(cur)
-probe(cur)
-#probf(cur)
-probg(cur)
+probd(cur)
+#probe(cur)
+probf(cur)
+#probg(cur)
 
 cur.close()
 conn.close()
