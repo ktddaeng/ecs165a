@@ -369,24 +369,124 @@ def probf(cur):
 		print(row)
 		
 def probg(cur):
-	print("\nResults for 3f")
-	query1= """
-		SELECT N.SID, N.Term, N.Major, M.Term, M.Major FROM 
+	print("\nResults for 3g")	
+	query1= """ SELECT COUNT(OldMajor) AS CtMajor, OldMajor FROM
+	(
+		SELECT N.SID, N.Term, N.Major AS OldMajor, M.Term, M.Major AS NewMajor FROM 
 			(
 				(SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) N
 				CROSS JOIN
 				(SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) M
 			)
-		WHERE (N.SID = M.SID AND N.Term < M.Term AND (M.Term - N.Term) <= 4 AND N.Major != M.Major)
-	LIMIT 10
+		WHERE (N.RN < M.RN AND N.SID = M.SID AND N.Term = M.Term AND N.Major != M.Major)
+		OR (N.SID = M.SID AND N.Term < M.Term AND (M.Term - N.Term) <= 4 AND N.Major != M.Major)
+	) F
+	WHERE NewMajor LIKE ('ABC%') AND OldMajor NOT LIKE ('ABC%')
+	GROUP BY (OldMajor)
+	ORDER BY CtMajor DESC
+	LIMIT 5;
 	"""
-	q = """
-	SELECT SID, Major, Term FROM Enrollment GROUP BY (SID, Term, Major)
-	(N.RN < M.RN AND N.SID = M.SID AND N.Term = M.Term AND N.Major != M.Major)
-		OR 
+	query2= """ SELECT (CtMajor * 100.0 /
+		( SELECT COUNT(SID) FROM
+		(SELECT N.SID AS SID, N.Term, N.Major AS OldMajor, M.Term, M.Major AS NewMajor FROM 
+				(
+					(SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) N
+					CROSS JOIN
+					(SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) M
+				)
+			WHERE (N.RN < M.RN AND N.SID = M.SID AND N.Term = M.Term AND N.Major != M.Major)
+			OR (N.SID = M.SID AND N.Term < M.Term AND (M.Term - N.Term) <= 4 AND N.Major != M.Major)
+		)X
+		WHERE NewMajor LIKE ('ABC%') AND OldMajor NOT LIKE ('ABC%')
+		)		
+	) AS Percentage, OldMajor FROM
+	(SELECT COUNT(OldMajor) AS CtMajor, OldMajor FROM
+	(
+		SELECT N.SID, N.Term, N.Major AS OldMajor, M.Term, M.Major AS NewMajor FROM 
+			(
+				(SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) N
+				CROSS JOIN
+				(SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) M
+			)
+		WHERE (N.RN < M.RN AND N.SID = M.SID AND N.Term = M.Term AND N.Major != M.Major)
+		OR (N.SID = M.SID AND N.Term < M.Term AND (M.Term - N.Term) <= 4 AND N.Major != M.Major)
+	) F
+	WHERE NewMajor LIKE ('ABC%') AND OldMajor NOT LIKE ('ABC%')
+	GROUP BY (OldMajor)
+	ORDER BY CtMajor DESC
+	LIMIT 5
+	) FX
+	;
 	"""
 	
+	print("The top 5 majors to transfer into ABC")
 	cur.execute(query1)
+	y = cur.fetchall()
+	for row in y:
+		print(row)
+	print("The top 5 majors to transfer into ABC by percentage")
+	cur.execute(query2)
+	y = cur.fetchall()
+	for row in y:
+		print(row)
+		
+def probh(cur):
+	print("\nResults for 3h")	
+	query1= """ SELECT COUNT(NewMajor) AS CtMajor, NewMajor FROM
+	(
+		SELECT N.SID, N.Term, N.Major AS OldMajor, M.Term, M.Major AS NewMajor FROM 
+			(
+				(SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) N
+				CROSS JOIN
+				(SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) M
+			)
+		WHERE (N.RN < M.RN AND N.SID = M.SID AND N.Term = M.Term AND N.Major != M.Major)
+		OR (N.SID = M.SID AND N.Term < M.Term AND (M.Term - N.Term) <= 4 AND N.Major != M.Major)
+	) F
+	WHERE OldMajor LIKE ('ABC%') AND NewMajor NOT LIKE ('ABC%')
+	GROUP BY (NewMajor)
+	ORDER BY CtMajor DESC
+	LIMIT 5;
+	"""
+	query2= """ SELECT (CtMajor * 100.0 /
+		( SELECT COUNT(SID) FROM
+		(SELECT N.SID AS SID, N.Term, N.Major AS OldMajor, M.Term, M.Major AS NewMajor FROM 
+				(
+					(SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) N
+					CROSS JOIN
+					(SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) M
+				)
+			WHERE (N.RN < M.RN AND N.SID = M.SID AND N.Term = M.Term AND N.Major != M.Major)
+			OR (N.SID = M.SID AND N.Term < M.Term AND (M.Term - N.Term) <= 4 AND N.Major != M.Major)
+		)X
+		WHERE OldMajor LIKE ('ABC%') AND NewMajor NOT LIKE ('ABC%')
+		)		
+	) AS Percentage, NewMajor FROM
+	(SELECT COUNT(NewMajor) AS CtMajor, NewMajor FROM
+	(
+		SELECT N.SID, N.Term, N.Major AS OldMajor, M.Term, M.Major AS NewMajor FROM 
+			(
+				(SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) N
+				CROSS JOIN
+				(SELECT RN, SID, Major, Term FROM Enrollment GROUP BY (RN, SID, Term, Major)) M
+			)
+		WHERE (N.RN < M.RN AND N.SID = M.SID AND N.Term = M.Term AND N.Major != M.Major)
+		OR (N.SID = M.SID AND N.Term < M.Term AND (M.Term - N.Term) <= 4 AND N.Major != M.Major)
+	) F
+	WHERE OldMajor LIKE ('ABC%') AND NewMajor NOT LIKE ('ABC%')
+	GROUP BY (NewMajor)
+	ORDER BY CtMajor DESC
+	LIMIT 5
+	) FX
+	;
+	"""
+	print("The top 5 majors to transfer out of ABC")
+	cur.execute(query1)
+	y = cur.fetchall()
+	for row in y:
+		print(row)
+	print("The top 5 majors to transfer out of ABC by percentage")
+	cur.execute(query2)
 	y = cur.fetchall()
 	for row in y:
 		print(row)
@@ -400,7 +500,8 @@ cur = conn.cursor()
 #probd(cur)
 #probe(cur)
 #probf(cur)
-probg(cur)
+#probg(cur)
+probh(cur)
 
 cur.close()
 conn.close()
