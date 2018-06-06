@@ -162,17 +162,22 @@ def probd(cur):
     ) X
     )
     ;
-    """
-    print("Lowest Pass Rate:")
+    """    
     cur.execute(query1)
+    
     y = cur.fetchall()
+    
     for row in y:
-        print(row)
-    print("Highest Pass Rate: ")
+        (rate, subject, num) = row
+        print(str(subject) + str(num) + ": " + str(round(rate, 2)) + "%")
+    print("\nHighest Pass Rate: ")
     cur.execute(query2)
     z = cur.fetchall()
     for row in z:
-        print(row)            
+        (_, subject, num) = row
+        print(str(subject) + str(num) + ": " + str(round(rate, 2)) + "%") 
+    print("\n")
+        #print(str(subject) + str(num) + ": " + str(round(rate, 2)) + "%") 
 
         
 def probe(cur):
@@ -205,8 +210,7 @@ def probe(cur):
     for i in x:
         print(i)
 
-
-def probf(cur): 
+def probf(cur):	
     print
     print("Results for 3f")
     query1 = """SELECT Major, AvgGrade FROM
@@ -225,7 +229,7 @@ def probf(cur):
         GROUP BY Major
         ORDER BY AvgGrade
     ) EnCrGrSelect
-    WHERE AvgGrade = (SELECT MAX(AvgGrade) FROM     
+    WHERE AvgGrade = (SELECT MAX(AvgGrade) FROM	
     (
         SELECT Major, AVG(GPA) AvgGrade FROM
         (
@@ -260,7 +264,7 @@ def probf(cur):
         GROUP BY Major
         ORDER BY AvgGrade
     ) EnCrGrSelect
-    WHERE AvgGrade = (SELECT MIN(AvgGrade) FROM     
+    WHERE AvgGrade = (SELECT MIN(AvgGrade) FROM
     (
         SELECT Major, AVG(GPA) AvgGrade FROM
         (
@@ -295,7 +299,7 @@ def probf(cur):
         GROUP BY Major
         ORDER BY AvgGrade
     ) EnCrGrSelect
-    WHERE AvgGrade = (SELECT MAX(AvgGrade) FROM     
+    WHERE AvgGrade = (SELECT MAX(AvgGrade) FROM
     (
         SELECT Major, AVG(GPA) AvgGrade FROM
         (
@@ -330,7 +334,7 @@ def probf(cur):
         GROUP BY Major
         ORDER BY AvgGrade
     ) EnCrGrSelect
-    WHERE AvgGrade = (SELECT MIN(AvgGrade) FROM     
+    WHERE AvgGrade = (SELECT MIN(AvgGrade) FROM	
     (
         SELECT Major, AVG(GPA) AvgGrade FROM
         (
@@ -349,28 +353,33 @@ def probf(cur):
     )
     ;
     """
-    
     print("Best Majors in ABC Courses")
     cur.execute(query1)
     y = cur.fetchall()
     for row in y:
-        print(row)
+        major, grade = row
+        print("Major: " + str(major) + "\tGrade: " + str(grade))
+        
     print("Worst Majors in ABC Courses")
     cur.execute(query2)
     y = cur.fetchall()
     for row in y:
-        print(row)
+        major, grade = row
+        print("Major: " + str(major) + "\tGrade: " + str(grade))
+        
     print("Best Majors in DEF Courses")
     cur.execute(query3)
     y = cur.fetchall()
     for row in y:
-        print(row)
+        major, grade = row
+        print("Major: " + str(major) + "\tGrade: " + str(grade))
     print("Worst Majors in DEF Courses")
     cur.execute(query4)
     y = cur.fetchall()
     for row in y:
-        print(row)
-        
+        major, grade = row
+        print("Major: " + str(major) + "\tGrade: " + str(grade))
+		
 def probg(cur):
     print("\nResults for 3g")   
     query1= """ SELECT COUNT(OldMajor) AS CtMajor, OldMajor FROM
@@ -389,7 +398,7 @@ def probg(cur):
     ORDER BY CtMajor DESC
     LIMIT 5;
     """
-    query2= """ SELECT (CtMajor * 100.0 /
+    query2= """ SELECT OldMajor, (CtMajor * 100.0 /
         ( SELECT COUNT(SID) FROM
         (SELECT N.SID AS SID, N.Term, N.Major AS OldMajor, M.Term, M.Major AS NewMajor FROM 
                 (
@@ -402,7 +411,7 @@ def probg(cur):
         )X
         WHERE NewMajor LIKE ('ABC%') AND OldMajor NOT LIKE ('ABC%')
         )       
-    ) AS Percentage, OldMajor FROM
+    ) AS Percentage FROM
     (SELECT COUNT(OldMajor) AS CtMajor, OldMajor FROM
     (
         SELECT N.SID, N.Term, N.Major AS OldMajor, M.Term, M.Major AS NewMajor FROM 
@@ -426,12 +435,14 @@ def probg(cur):
     cur.execute(query1)
     y = cur.fetchall()
     for row in y:
-        print(row)
+        ctmajor, oldmajor = row
+        print("Major: " + str(oldmajor) + "\tNumber: " + str(ctmajor))
     print("The top 5 majors to transfer into ABC by percentage")
     cur.execute(query2)
     y = cur.fetchall()
     for row in y:
-        print(row)
+        oldmajor, percentage = row
+        print("Major: " + str(oldmajor) + "\tPercentage: " + str(percentage)[:6] + "%")
         
 def probh(cur):
     print("\nResults for 3h")   
@@ -487,22 +498,24 @@ def probh(cur):
     cur.execute(query1)
     y = cur.fetchall()
     for row in y:
-        print(row)
+        ctmajor, newmajor = row
+        print("Major: " + str(newmajor) + "\tNumber: " + str(ctmajor))
     print("The top 5 majors to transfer out of ABC by percentage")
     cur.execute(query2)
     y = cur.fetchall()
     for row in y:
-        print(row)
+        percentage, newmajor = row
+        print("Major: " + str(newmajor) + "\tPercentage: " + str(percentage)[:6] + "%")
 
 conn = psycopg2.connect("dbname=FakeUData")
 cur = conn.cursor()
 
-proba(cur)
-probb(cur)
-probc(cur)
-probd(cur)
-probe(cur)
-probf(cur)
+#proba(cur)
+#probb(cur)
+#probc(cur)
+#probd(cur)
+#probe(cur)
+#probf(cur)
 probg(cur)
 probh(cur)
 

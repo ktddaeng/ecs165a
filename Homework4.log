@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.6.4)  4 JUN 2018 21:36
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.6.4)  5 JUN 2018 22:12
 entering extended mode
 **./Homework4.tex
 (Homework4.tex
@@ -361,10 +361,75 @@ Underfull \hbox (badness 10000) in paragraph at lines 71--2
 
  []
 
-) [3
+
+Underfull \hbox (badness 10000) in paragraph at lines 3--18
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3--18
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3--18
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3--18
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3--18
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3--18
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3--18
+
+ []
+
+)
+Underfull \hbox (badness 10000) in paragraph at lines 19--72
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 19--72
+
+ []
+
+[3
 
 ] (prob1c.tex
 Underfull \hbox (badness 10000) in paragraph at lines 73--2
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 8--11
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 12--15
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 18--21
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 26--29
 
  []
 
@@ -372,57 +437,164 @@ Underfull \hbox (badness 10000) in paragraph at lines 73--2
 
 ] [5
 
-] (prob3a.tex)
-Underfull \hbox (badness 10000) in paragraph at lines 98--99
+] (prob3a.tex
+Underfull \hbox (badness 10000) in paragraph at lines 98--2
+
+ []
+
+)
+Underfull \hbox (badness 10000) in paragraph at lines 3--99
+$
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3--99
 
  []
 
 [6
 
-] (prob3b.tex)
-Underfull \hbox (badness 10000) in paragraph at lines 100--101
+] (prob3b.tex
+Underfull \hbox (badness 10000) in paragraph at lines 100--2
 
  []
 
-[7
 
-] (prob3c.tex)
-Underfull \hbox (badness 10000) in paragraph at lines 102--103
+Underfull \hbox (badness 10000) in paragraph at lines 3--5
 
  []
 
-[8
+) [7
 
-] (prob3d.tex)
-Underfull \hbox (badness 10000) in paragraph at lines 104--105
+] (prob3c.tex
+Underfull \hbox (badness 10000) in paragraph at lines 102--2
 
+ []
+
+) [8
+
+] (prob3d.tex
+Underfull \hbox (badness 10000) in paragraph at lines 104--2
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3--5
+
+ []
+
+)
+Overfull \hbox (6.77394pt too wide) in paragraph at lines 6--105
+\OT1/cmr/m/n/10 ABC377, DEF105, DEF213, DEF216, DEF217, DEF218, DEF224, DEF236,
+ DEF237, DEF240, DEF255,
+ []
+
+
+Overfull \hbox (5.94061pt too wide) in paragraph at lines 6--105
+\OT1/cmr/m/n/10 DEF260, DEF272, DEF278, DEF282, DEF288, DEF293, DEF295, DEF298,
+ DEF302, DEF303, DEF304,
+ []
+
+
+Overfull \hbox (5.94061pt too wide) in paragraph at lines 6--105
+\OT1/cmr/m/n/10 DEF305, DEF306, DEF307, DEF310, DEF313, DEF314, DEF316, DEF319,
+ DEF320, DEF322, DEF323,
+ []
+
+
+Overfull \hbox (5.94061pt too wide) in paragraph at lines 6--105
+\OT1/cmr/m/n/10 DEF324, DEF325, DEF328, DEF329, DEF332, DEF333, DEF337, DEF338,
+ DEF339, DEF341, DEF343,
+ []
+
+
+Overfull \hbox (5.94061pt too wide) in paragraph at lines 6--105
+\OT1/cmr/m/n/10 DEF345, DEF348, DEF349, DEF351, DEF352, DEF353, DEF354, DEF355,
+ DEF362, DEF363, DEF364,
+ []
+
+
+Overfull \hbox (5.94061pt too wide) in paragraph at lines 6--105
+\OT1/cmr/m/n/10 DEF365, DEF366, DEF368, DEF369, DEF375, DEF376, DEF378, DEF380,
+ DEF381, DEF382, DEF386,
+ []
+
+
+Overfull \hbox (5.94061pt too wide) in paragraph at lines 6--105
+\OT1/cmr/m/n/10 DEF387, DEF388, DEF390, DEF393, DEF397, DEF398, DEF401, DEF403,
+ DEF404, DEF408, DEF410,
  []
 
 [9
 
-] (prob3e.tex)
-Underfull \hbox (badness 10000) in paragraph at lines 106--107
+] (prob3e.tex
+Underfull \hbox (badness 10000) in paragraph at lines 106--2
+
+ []
+
+)
+Underfull \hbox (badness 10000) in paragraph at lines 3--107
 
  []
 
 [10
 
-] (prob3f.tex)
-Underfull \hbox (badness 10000) in paragraph at lines 108--109
+] (prob3f.tex
+Underfull \hbox (badness 10000) in paragraph at lines 108--2
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3--17
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 18--23
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 24--33
+
+ []
+
+)
+Underfull \hbox (badness 10000) in paragraph at lines 34--109
 
  []
 
 [11
 
-] (prob3g.tex)
-Underfull \hbox (badness 10000) in paragraph at lines 110--111
+] (prob3g.tex
+Underfull \hbox (badness 10000) in paragraph at lines 110--2
+
+ []
+
+)
+Underfull \hbox (badness 10000) in paragraph at lines 3--111
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3--111
 
  []
 
 [12
 
-] (prob3h.tex)
-Underfull \hbox (badness 10000) in paragraph at lines 112--113
+] (prob3h.tex
+Underfull \hbox (badness 10000) in paragraph at lines 112--2
+
+ []
+
+)
+Underfull \hbox (badness 10000) in paragraph at lines 3--113
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3--113
 
  []
 
@@ -449,7 +621,7 @@ Here is how much of TeX's memory you used:
  6791 multiletter control sequences out of 15000+200000
  11196 words of font info for 44 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,10n,43p,693b,324s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 41i,10n,43p,1135b,322s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Users/gadau/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/
 public/amsfonts/cm/cmbx10.pfb><C:/Users/gadau/AppData/Local/Programs/MiKTeX 2.9
 /fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/gadau/AppData/Local/Progra
@@ -458,10 +630,11 @@ ms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/gadau/AppData
 adau/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb
 ><C:/Users/gadau/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/
 cm/cmr17.pfb><C:/Users/gadau/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publ
-ic/amsfonts/cm/cmsy10.pfb>
-Output written on Homework4.pdf (16 pages, 623448 bytes).
+ic/amsfonts/cm/cmsy10.pfb><C:/Users/gadau/AppData/Local/Programs/MiKTeX 2.9/fon
+ts/type1/public/amsfonts/symbols/msam10.pfb>
+Output written on Homework4.pdf (16 pages, 646940 bytes).
 PDF statistics:
- 83 PDF objects out of 1000 (max. 8388607)
+ 87 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
